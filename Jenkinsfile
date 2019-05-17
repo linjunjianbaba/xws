@@ -2,7 +2,10 @@ node {
    stage('Cluster Off') {
         sh '/data/script/1slb12'
         sh '/data/script/2slb12'
-##		sh 'ansible NG -m shell -a 'sed -i ''
+		sh 'ssh root@112.74.130.92 "hostname"'
+		sh 'ssh root@120.77.225.5 "hostname"'
+		sh 'ssh root@120.79.106.226 "hostname"'
+		sh 'ssh root@120.76.85.30 "hostname"'
    }
    stage('Deploy') {
        echo "stop tomcat"
