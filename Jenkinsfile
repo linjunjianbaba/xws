@@ -1,23 +1,24 @@
+def Ip = ["120.78.143.199","120.79.229.222","120.79.150.67"]
+
 node {
-   stage('Cluster Off') {
-        sh '/data/script/1slb12'
-        sh '/data/script/2slb12'
-		sh 'ssh root@112.74.130.92 "hostname"'
-		sh 'ssh root@120.77.225.5 "hostname"'
-		sh 'ssh root@120.79.106.226 "hostname"'
-		sh 'ssh root@120.76.85.30 "hostname"'
+   stage('git code'){
+       git credentialsId: '1374fff2-a127-42ba-80d9-43aeeb9214b2', url: 'http://coding.sibu.cn/php/bodyfat.git'
+       sh 'pwd'
    }
-   stage('Deploy') {
-       echo "stop tomcat"
-       echo "mv package"
-       echo "copy package"
-       echo "检查api"
-       echo "修改Cluster"
-       echo "start tomcat"
-
+   stage('copy CODE'){
+       for (i in Ip){
+           sh "scp -r /home/tomcat/.jenkins/workspace/PHP_deploy/* root@$i:/opt/www/bodyfat"
+       }
    }
-   stage('Cluster On') {
-       sh '/data/script/aslb'
-
+   stage('chown'){
+       for (i in Ip){
+           sh "ssh root@$i 'chown -R nginx.nginx /opt/www/bodyfat'"
+       }
+   }
+   stage('Delete .git'){
+       for (i in Ip){
+           sh "ssh root@$i 'rm -rf /opt/www/bodyfat/.git'"
+       }
+       
    }
 }
