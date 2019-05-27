@@ -7,7 +7,7 @@ node {
    }
    stage('Copy Code'){
        for (i in Ip){
-           sh "scp -r /home/tomcat/.jenkins/workspace/PHP_deploy/* root@$i:/opt/www/bodyfat"
+           sh "scp -r /home/tomcat/.jenkins/workspace/bodyfat/* root@$i:/opt/www/bodyfat/"
        }
    }
    stage('Chown'){
