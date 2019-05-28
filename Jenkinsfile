@@ -1,5 +1,5 @@
 
-def Ip = ["120.79.229.222"]
+def Ip = ["120.78.143.199"]
 
 node {
    stage('Git Code'){
